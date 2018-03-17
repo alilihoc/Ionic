@@ -1,0 +1,67 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Accueil</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding class="home">
+  <ion-grid *ngIf="weather; else alertWeather">
+    <ion-row>
+      <ion-col width-50 offset-25>
+        <h2 class="location">
+          {{ weather.name }}, {{ weather.sys.country}}
+        </h2>
+        <p>
+
+        </p>
+        <div class="center">
+          <img [src]="'http://openweathermap.org/img/w/'+weather.weather[0].icon+'.png'" alt="">
+        </div>
+        <div class="desc center capitalize">
+          {{ weather.weather[0].description }}
+        </div>
+        <h3 class="temp">
+          {{ weather.main.temp }} &deg;C
+        </h3>
+      </ion-col>
+    </ion-row>
+    <ion-list >
+      <ion-item class="infos">
+        <strong>Température minimale : </strong> {{ weather.main.temp_min }}&deg;
+      </ion-item>
+      <ion-item class="infos">
+        <strong>Température maximale : </strong> {{ weather.main.temp_max }}&deg;
+      </ion-item>
+      <ion-item class="infos">
+        <strong>Taux d'humidité : </strong> {{ weather.main.humidity }}%
+      </ion-item>
+      <ion-item class="infos">
+        <strong>Vent : </strong> {{ weather.wind.speed*3.6 | number: '1.0-2'}} Km/h
+      </ion-item>
+      <ion-item class="infos">
+        <strong>Lever de soleil : </strong> {{weather.sys.sunrise*1000 | date:'shortTime'}}
+      </ion-item>
+      <ion-item class="infos">
+        <strong>Coucher de soleil : </strong> {{ weather.sys.sunset *1000 | date:'shortTime' }}
+      </ion-item>
+    </ion-list>
+
+    <ion-grid>
+      <ion-row>
+        <ion-col col-6 offset-6 >
+          <button ion-button (click)="goToP()" class="previsions">
+            Prévisions à venir&nbsp;&nbsp;  <ion-icon name="arrow-round-forward"></ion-icon>
+          </button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+      <ion-grid *ngIf="weather.message == 'city not found'">
+        <ion-row>
+          <ion-col col-6 offset-6 align-self-center class="nofounded">
+            Aucune ville trouvée
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+  </ion-grid>
+</ion-content>
